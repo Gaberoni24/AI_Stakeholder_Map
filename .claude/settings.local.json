@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install)",
+      "Bash(npm install react-plotly.js plotly.js-basic-dist-min)",
+      "Bash(npm install -D tailwindcss @tailwindcss/vite xlsx)",
+      "Bash(node scripts/convert-xlsx.js)",
+      "Bash(node -e \":*)",
+      "Bash(npm run build)"
+    ]
+  }
+}
