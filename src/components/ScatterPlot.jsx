@@ -2,6 +2,7 @@ import { useMemo, useCallback, useState, useRef, useEffect } from 'react';
 import Plotly from 'plotly.js-basic-dist-min';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import { CATEGORY_COLORS, getCategoryColor } from '../assets/colors';
+import { useTouchZoomPan } from '../hooks/useTouchZoomPan';
 
 const Plot = createPlotlyComponent(Plotly);
 
@@ -75,6 +76,8 @@ export default function ScatterPlot({ stakeholders, categories, onPointClick, hi
   const [popup, setPopup] = useState(null);
   const plotRef = useRef(null);
   const containerRef = useRef(null);
+
+  useTouchZoomPan(plotRef);
 
   const isZoomed = axisRange.x[0] > 0.1 || axisRange.x[1] < 10.4 ||
                    axisRange.y[0] > 0.1 || axisRange.y[1] < 10.4;
@@ -276,8 +279,9 @@ export default function ScatterPlot({ stakeholders, categories, onPointClick, hi
         if (!s) return;
 
         const rawEvent = event.event;
-        const clientX = rawEvent?.clientX ?? 0;
-        const clientY = rawEvent?.clientY ?? 0;
+        const touch = rawEvent?.changedTouches?.[0];
+        const clientX = touch?.clientX ?? rawEvent?.clientX ?? 0;
+        const clientY = touch?.clientY ?? rawEvent?.clientY ?? 0;
 
         setPopup({ x: clientX, y: clientY, stakeholder: s });
       }
@@ -295,16 +299,18 @@ export default function ScatterPlot({ stakeholders, categories, onPointClick, hi
     return () => window.removeEventListener('keydown', handler);
   }, [popup]);
 
-  // Dismiss popup on click outside
+  // Dismiss popup on click/touch outside
   useEffect(() => {
     if (!popup) return;
     const handler = () => setPopup(null);
     const id = setTimeout(() => {
       window.addEventListener('click', handler);
+      window.addEventListener('touchstart', handler);
     }, 0);
     return () => {
       clearTimeout(id);
       window.removeEventListener('click', handler);
+      window.removeEventListener('touchstart', handler);
     };
   }, [popup]);
 
@@ -421,7 +427,7 @@ export default function ScatterPlot({ stakeholders, categories, onPointClick, hi
         ref={containerRef}
         className="bg-white rounded-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.06)]
                    ring-1 ring-slate-100 p-2 w-full"
-        style={{ height: 'min(80vh, 750px)', minHeight: '500px' }}
+        style={{ height: 'min(80vh, 750px)', minHeight: '500px', touchAction: 'none' }}
       >
         <Plot
           ref={plotRef}
