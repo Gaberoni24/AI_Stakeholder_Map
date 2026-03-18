@@ -17,6 +17,7 @@ function App() {
     setSearchQuery,
     highlightedId,
     setHighlightedId,
+    categoryCounts,
     filteredScored,
     filteredAll,
   } = useStakeholderData();
@@ -29,7 +30,7 @@ function App() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100/50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100/80">
       <Header />
 
       {/* Sidebar + Plot layout */}
@@ -37,6 +38,7 @@ function App() {
         <CategoryFilter
           categories={categories}
           selectedCategories={selectedCategories}
+          categoryCounts={categoryCounts}
           onToggle={toggleCategory}
           onSelectAll={selectAll}
           onClearAll={clearAll}
@@ -46,7 +48,11 @@ function App() {
             stakeholders={filteredScored}
             categories={categories}
             onPointClick={handlePointClick}
+            highlightedId={highlightedId}
           />
+          <p className="text-xs text-slate-400 text-center mt-2 tracking-wide">
+            Scroll to zoom <span className="text-slate-300 mx-1">&middot;</span> Drag to pan <span className="text-slate-300 mx-1">&middot;</span> Click any point for details
+          </p>
         </div>
       </div>
 

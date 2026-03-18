@@ -26,6 +26,14 @@ export function useStakeholderData() {
     setSelectedCategories(new Set());
   }, []);
 
+  const categoryCounts = useMemo(() => {
+    const counts = {};
+    for (const s of all) {
+      counts[s.category] = (counts[s.category] || 0) + 1;
+    }
+    return counts;
+  }, [all]);
+
   const filteredScored = useMemo(
     () => scored.filter(s => selectedCategories.has(s.category)),
     [scored, selectedCategories]
@@ -57,6 +65,7 @@ export function useStakeholderData() {
     setSearchQuery,
     highlightedId,
     setHighlightedId,
+    categoryCounts,
     filteredScored,
     filteredAll,
   };

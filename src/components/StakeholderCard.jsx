@@ -18,8 +18,8 @@ const StakeholderCard = forwardRef(function StakeholderCard(
       className={`
         border rounded-xl p-4 cursor-pointer transition-all duration-200
         ${isHighlighted
-          ? 'ring-2 ring-blue-400 bg-blue-50/50 border-blue-200 shadow-md'
-          : 'border-slate-200/80 bg-white hover:border-slate-300 hover:shadow-sm'
+          ? 'ring-2 ring-blue-400 bg-blue-50/50 border-blue-200 shadow-[0_4px_16px_rgba(59,130,246,0.12)]'
+          : 'border-slate-200/80 bg-white hover:border-slate-300 hover:-translate-y-0.5 hover:shadow-[0_2px_12px_rgba(0,0,0,0.06)]'
         }
       `}
     >
@@ -37,18 +37,26 @@ const StakeholderCard = forwardRef(function StakeholderCard(
             </span>
           </div>
         </div>
-        {s.power != null && (
-          <div className="flex gap-2 shrink-0">
-            <div className="text-center">
-              <div className="text-xs font-bold text-slate-700">{s.power}</div>
-              <div className="text-[9px] text-slate-400 uppercase">Pwr</div>
+        <div className="flex items-center gap-2 shrink-0">
+          {s.power != null && (
+            <div className="flex gap-2">
+              <div className="text-center">
+                <div className="text-xs font-bold text-slate-700">{s.power}</div>
+                <div className="text-[9px] text-slate-400 uppercase">Pwr</div>
+              </div>
+              <div className="text-center">
+                <div className="text-xs font-bold text-slate-700">{s.interest}</div>
+                <div className="text-[9px] text-slate-400 uppercase">Int</div>
+              </div>
             </div>
-            <div className="text-center">
-              <div className="text-xs font-bold text-slate-700">{s.interest}</div>
-              <div className="text-[9px] text-slate-400 uppercase">Int</div>
-            </div>
-          </div>
-        )}
+          )}
+          <svg
+            className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${showExpanded ? 'rotate-180' : ''}`}
+            fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
       </div>
 
       {showExpanded && s.rationale && (

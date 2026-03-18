@@ -6,7 +6,8 @@
       "Bash(npm install -D tailwindcss @tailwindcss/vite xlsx)",
       "Bash(node scripts/convert-xlsx.js)",
       "Bash(node -e \":*)",
-      "Bash(npm run build)"
+      "Bash(npm run build)",
+      "Bash(grep -E \"\\\\.\\(jsx|js|tsx|ts\\)$\")"
     ]
   }
 }

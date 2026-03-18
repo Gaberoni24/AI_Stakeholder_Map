@@ -19,7 +19,7 @@ export default function StakeholderDirectory({
   const count = stakeholders.length;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 mt-12">
+    <div className="max-w-[1400px] mx-auto px-4 sm:px-6 mt-12">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-5">
         <h2 className="text-xl font-bold text-slate-900">
           Stakeholder Directory
@@ -42,21 +42,22 @@ export default function StakeholderDirectory({
           />
         </div>
       </div>
-      <div className="columns-1 md:columns-2 gap-3 pb-8 [column-fill:balance]">
-        {stakeholders.map(s => (
-          <div key={s.id} className="break-inside-avoid mb-3">
-            <StakeholderCard
-              stakeholder={s}
-              isHighlighted={s.id === highlightedId}
-            />
-          </div>
-        ))}
-        {count === 0 && (
-          <p className="text-center text-slate-400 py-12">
-            No stakeholders match your filters.
-          </p>
-        )}
-      </div>
+      {count === 0 ? (
+        <p className="text-center text-slate-400 py-12">
+          No stakeholders match your filters.
+        </p>
+      ) : (
+        <div className="columns-1 md:columns-2 gap-3 pb-8">
+          {stakeholders.map(s => (
+            <div key={s.id} className="break-inside-avoid mb-3">
+              <StakeholderCard
+                stakeholder={s}
+                isHighlighted={s.id === highlightedId}
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
