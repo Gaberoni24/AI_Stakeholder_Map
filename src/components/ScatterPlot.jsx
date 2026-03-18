@@ -462,6 +462,7 @@ export default function ScatterPlot({ stakeholders, categories, onPointClick, hi
                      ring-1 ring-slate-200/60 p-4 animate-[fadeIn_0.15s_ease]"
           style={popupStyle}
           onClick={e => e.stopPropagation()}
+          onTouchStart={e => e.stopPropagation()}
         >
           <button
             onClick={() => setPopup(null)}
